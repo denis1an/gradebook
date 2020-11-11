@@ -1,30 +1,37 @@
 create table groups
 (
-	id integer not null
-		constraint group_pk
+	id serial not null
+		constraint groups_pk
 			primary key,
-	name varchar(20) not null
+	name varchar(50)
 );
-
-alter table groups owner to user_gradebook;
 
 create table students
 (
-	id integer not null
+	id serial not null
 		constraint students_pk
 			primary key,
 	firstname varchar(100) not null,
 	lastname varchar(100) not null,
 	"groupId" integer not null
-		constraint students_group_id_fk
+		constraint students_groups_id_fk
 			references groups
 );
 
-alter table students owner to user_gradebook;
+insert into groups (name) values
+('Group 1'),
+('Group 2'),
+('Group 3');
 
-create unique index students_id_uindex
-	on students (id);
 
-create unique index group_id_uindex
-	on groups (id);
+insert into students (firstname, lastname, "groupId") values
+('Anna', 'Green', 1),
+('Aleksandr', 'Brown', 1),
+('Martha', 'Thomas', 2),
+('Jack', 'Adams', 2),
+('Harry', 'Murphy', 2),
+('Sophie', 'Wilson', 1),
+('George', 'Miller', 3),
+('Jack', 'Evans', 3);
+
 
