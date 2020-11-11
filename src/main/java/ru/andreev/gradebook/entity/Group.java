@@ -1,11 +1,11 @@
 package ru.andreev.gradebook.entity;
 
-import java.util.Set;
+import java.util.List;
 
 public class Group {
     private Integer id;
     private String name;
-    private Set<Student> students;
+    private List<Student> students;
 
     public Group() {
     }
@@ -26,11 +26,11 @@ public class Group {
         this.name = name;
     }
 
-    public Set<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(Set<Student> students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 }
