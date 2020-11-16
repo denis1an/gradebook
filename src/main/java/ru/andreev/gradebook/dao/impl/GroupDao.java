@@ -47,7 +47,7 @@ public class GroupDao implements IDao<Group> {
 
     @Override
     public List<Group> findAll() {
-        String SQL = "SELECT groups.*, s.id, s.firstname, s.lastname  FROM groups LEFT JOIN students s on groups.id = s.\"groupId\" ORDER BY groups.id";
+        String SQL = "SELECT groups.*, students.id, students.firstname, students.lastname  FROM groups LEFT JOIN students on groups.id = students.\"groupId\" ORDER BY groups.id";
         List<Group> groups = null;
         try(Connection connection = Database.getConnection();
             Statement statement = connection.createStatement()) {
@@ -56,19 +56,19 @@ public class GroupDao implements IDao<Group> {
                 groups = new ArrayList<>();
                 while (hadNext){
                     Group group = new Group();
-                    group.setId(result.getInt("id"));
-                    group.setName(result.getString("name"));
+                    group.setId(result.getInt(1));
+                    group.setName(result.getString(2));
                     List<Student> students = new ArrayList<>();
                     do{
                         Student student = new Student();
-                        student.setId(result.getInt("s.id"));
-                        student.setFirstName(result.getString("firstname"));
-                        student.setLastName(result.getString("lastname"));
+                        student.setId(result.getInt(3));
+                        student.setFirstName(result.getString(4));
+                        student.setLastName(result.getString(5));
                         student.setGroup(group);
 
                         students.add(student);
                     }while ( (hadNext = result.next()) &&
-                            group.getId() == result.getInt("id"));
+                            group.getId() == result.getInt(1));
                     group.setStudents(students);
                     groups.add(group);
                 }
