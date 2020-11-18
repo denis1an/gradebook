@@ -28,7 +28,7 @@ public class GradeBookServlet extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Group> groups = groupDao.findAll();
         req.setAttribute("groups",groups);
-        req.getRequestDispatcher("gradebook.jsp").forward(req,resp);
+        req.getRequestDispatcher("groups.jsp").forward(req,resp);
     }
 
     @Override
