@@ -14,16 +14,28 @@
 </head>
 <body>
 <table>
-    <tr>
-        <th>ID</th>
-        <th>GROUP NAME</th>
-    </tr>
-    <c:forEach items="${groups}" var="group" varStatus="status">
-        <tr>
-            <td>${group.getId()}</td>
-            <td>${group.getName()}</td>
-        </tr>
-    </c:forEach>
+    <button>
+        <a type="button" href="#">Add new group</a>
+    </button>
+    <p>Groups: </p>
+    <div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>GROUP NAME</th>
+            </tr>
+            <tbody>
+                <c:forEach items="${groups}" var="group" varStatus="status">
+                    <tr>
+                        <td>${group.getId()}</td>
+                        <td>${group.getName()}</td>
+                        <td><a href="#">More</a></td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
+    
 </table>
 </body>
 </html>
