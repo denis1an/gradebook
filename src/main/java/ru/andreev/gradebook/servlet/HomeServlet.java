@@ -3,6 +3,7 @@ package ru.andreev.gradebook.servlet;
 import ru.andreev.gradebook.dao.impl.GroupDao;
 import ru.andreev.gradebook.dao.impl.StudentDao;
 import ru.andreev.gradebook.entity.Group;
+import ru.andreev.gradebook.entity.Student;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,21 +14,24 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/home")
-public class GradeBookServlet extends HttpServlet{
+public class HomeServlet extends HttpServlet{
     private GroupDao groupDao;
     private StudentDao studentDao;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         groupDao = new GroupDao();
         studentDao = new StudentDao();
     }
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Group> groups = groupDao.findAll();
+        List<Student> students = studentDao.findAll();
+
         req.setAttribute("groups",groups);
+        req.setAttribute("students",students);
+
         req.getRequestDispatcher("groups.jsp").forward(req,resp);
     }
 
