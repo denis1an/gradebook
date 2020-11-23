@@ -31,7 +31,7 @@
                         <tr>
                             <td>${group.getId()}</td>
                             <td>${group.getName()}</td>
-                            <td><a href="/groups?id=${group.getId()}">More</a></td>
+                            <td><a href="/group?id=${group.getId()}">More</a></td>
                         </tr>
                     </c:forEach>
                 </tbody>

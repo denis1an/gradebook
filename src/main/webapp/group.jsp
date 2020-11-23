@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: denisandreev
@@ -11,25 +12,32 @@
     <title>Title</title>
 </head>
 <body>
+
+<p>Id: ${group.getId()}</p>
+<p>Name: ${group.getName()}</p>
+
 <button>
     <a href="#">Add new student</a>
 </button>
 
+<p>Students:</p>
 <table>
+    <thead>
     <tr>
-        <th>ID</th>
-        <th>LASTNAME</th>
-        <th>FIRSTNAME</th>
+        <th>Id</th>
+        <th>Lastname</th>
+        <th>Firstname</th>
     </tr>
+    </thead>
     <tbody>
-    <c:forEach items="${groups.getStudents()}" var="student" varStatus="status">
-        <tr>
-            <td>${student.getId()}</td>
-            <td>${student.getFirstName()}</td>
-            <td>${student.getLastName()}</td>
-            <td><a href="#">Edit</a></td>
-        </tr>
-    </c:forEach>
+        <c:forEach items="${group.getStudents()}" var="student" >
+            <tr>
+                <td>${student.getId()}</td>
+                <td>${student.getFirstName()}</td>
+                <td>${student.getLastName()}</td>
+                <td><a href="#">Edit</a></td>
+            </tr>
+        </c:forEach>
     </tbody>
 </table>
 
