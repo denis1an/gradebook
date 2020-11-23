@@ -52,7 +52,7 @@ public class StudentDao implements IDao<Student> {
                 while (resultSet.next()){
                     Student student = new Student();
                     student.setId(resultSet.getInt("id"));
-                    student.setFirstName("firstname");
+                    student.setFirstName(resultSet.getString("firstname"));
                     student.setLastName(resultSet.getString("lastname"));
                     students.add(student);
                 }
