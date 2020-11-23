@@ -19,19 +19,19 @@ public class GroupDao implements IDao<Group> {
         try (Connection connection = Database.getConnection();
             PreparedStatement statement = connection.prepareStatement(SQL)){
 
-            statement.setString(1,id.toString());
+            statement.setInt(1,id);
 
             try(ResultSet result = statement.executeQuery()){
                while (result.next()){
                    group = new Group();
-                   group.setId(result.getInt("groups.id"));
-                   group.setName(result.getString("name"));
+                   group.setId(result.getInt(1));
+                   group.setName(result.getString(2));
                    List<Student> students = new ArrayList<>();
                    do{
                         Student student = new Student();
-                        student.setId(result.getInt("s.id"));
-                        student.setFirstName(result.getString("firstname"));
-                        student.setLastName(result.getString("lastname"));
+                        student.setId(result.getInt(3));
+                        student.setFirstName(result.getString(4));
+                        student.setLastName(result.getString(5));
                         student.setGroup(group);
 
                         students.add(student);
