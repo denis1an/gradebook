@@ -5,6 +5,7 @@ import ru.andreev.gradebook.db.Database;
 import ru.andreev.gradebook.entity.Group;
 import ru.andreev.gradebook.entity.Student;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +13,17 @@ import java.util.Optional;
 
 public class GroupDao implements IDao<Group> {
 
+    private Connection connection;
+
+    public GroupDao() {
+        connection = Database.getConnection();
+    }
+
     @Override
     public Optional<Group> findById(Integer id) {
         String SQL = "SELECT groups.*, s.id, s.firstname, s.lastname FROM groups LEFT JOIN students s on groups.id = s.\"groupId\" WHERE groups.id = ?";
         Group group = null;
-        try (Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL)){
+        try (PreparedStatement statement = connection.prepareStatement(SQL)){
 
             statement.setInt(1,id);
 
@@ -49,8 +55,7 @@ public class GroupDao implements IDao<Group> {
     public List<Group> findAll() {
         String SQL = "SELECT groups.*, students.id, students.firstname, students.lastname  FROM groups LEFT JOIN students on groups.id = students.\"groupId\" ORDER BY groups.id";
         List<Group> groups = null;
-        try(Connection connection = Database.getConnection();
-            Statement statement = connection.createStatement()) {
+        try(Statement statement = connection.createStatement()) {
             try (ResultSet result = statement.executeQuery(SQL)){
                 boolean hadNext = result.next();
                 groups = new ArrayList<>();
@@ -82,8 +87,7 @@ public class GroupDao implements IDao<Group> {
     @Override
     public void save(Group group) {
         String SQL = "INSERT INTO groups (name) VALUES (?)";
-        try(Connection connection  = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL)){
+        try(PreparedStatement statement = connection.prepareStatement(SQL)){
             statement.setString(1,group.getName());
 
             statement.executeUpdate();
@@ -95,8 +99,7 @@ public class GroupDao implements IDao<Group> {
     @Override
     public void update(Group group) {
         String SQL = "UPDATE groups SET name = ? WHERE id = ?";
-        try (Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL)){
+        try (PreparedStatement statement = connection.prepareStatement(SQL)){
             statement.setString(1,group.getName());
             statement.setInt(2, group.getId());
 
@@ -109,8 +112,7 @@ public class GroupDao implements IDao<Group> {
     @Override
     public void delete(Integer id) {
         String SQL = "DELETE FROM groups WHERE id = ?";
-        try (Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL)){
+        try (PreparedStatement statement = connection.prepareStatement(SQL)){
             statement.setInt(1,id);
 
             statement.executeUpdate();

@@ -11,13 +11,19 @@ import java.util.List;
 import java.util.Optional;
 
 public class StudentDao implements IDao<Student> {
+
+    private Connection connection;
+
+    public StudentDao() {
+        connection = Database.getConnection();
+    }
+
     @Override
     public Optional<Student> findById(Integer id) {
         String SQL = "SELECT students.id, firstname, lastname, g.id, g.name FROM students " +
                 "INNER JOIN groups g on g.id = students.\"groupId\" WHERE students.id = ?";
         Student student = null;
-        try(Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL)){
+        try(PreparedStatement statement = connection.prepareStatement(SQL)){
             statement.setInt(1,id);
 
             statement.executeUpdate();
@@ -45,8 +51,7 @@ public class StudentDao implements IDao<Student> {
     public List<Student> findAll() {
         String SQL = "SELECT students.id, firstname, lastname FROM students";
         List<Student> students = null;
-        try (Connection connection = Database.getConnection();
-             Statement statement = connection.createStatement()){
+        try (Statement statement = connection.createStatement()){
             try (ResultSet resultSet = statement.executeQuery(SQL)){
                 students = new ArrayList<>();
                 while (resultSet.next()){
@@ -66,8 +71,7 @@ public class StudentDao implements IDao<Student> {
     @Override
     public void save(Student student) {
         String SQL = "INSERT INTO students (firstname,lastname, \"groupId\") VALUES (?,?, ?)";
-        try (Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL)){
+        try (PreparedStatement statement = connection.prepareStatement(SQL)){
             statement.setString(1,student.getFirstName());
             statement.setString(2,student.getLastName());
             statement.setInt(3,student.getGroup().getId());
@@ -81,8 +85,7 @@ public class StudentDao implements IDao<Student> {
     @Override
     public void update(Student student) {
         String SQL = "UPDATE students SET firstname = ?, lastname = ?,  \"groupId\"= ? WHERE  id = ?";
-        try (Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL)){
+        try (PreparedStatement statement = connection.prepareStatement(SQL)){
             statement.setString(1, student.getFirstName());
             statement.setString(2, student.getLastName());
             statement.setInt(3, student.getGroup().getId());
@@ -97,8 +100,7 @@ public class StudentDao implements IDao<Student> {
     @Override
     public void delete(Integer id) {
         String SQL = "DELETE FROM students WHERE id = ?";
-        try (Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL)){
+        try (PreparedStatement statement = connection.prepareStatement(SQL)){
             statement.setInt(1, id);
 
             statement.executeUpdate();
