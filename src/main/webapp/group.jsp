@@ -12,14 +12,17 @@
     <title>Title</title>
 </head>
 <body>
-
-<p>Id: ${group.getId()}</p>
-<p>Name: ${group.getName()}</p>
-
+<h3>
+    Group
+    <p>Name: ${group.getName()}</p>
+</h3>
+<button>
+    <a href="${pageContext.request.contextPath}/home">Back</a>
+</button>
 <p>Add student:</p>
 <form method="post" action="${pageContext.request.contextPath}/group">
-    <label>Firstname:<input type="text" name="firstname"></label>
-    <p><label>Lastname:<input type="text" name="lastname"></label></p>
+    <input type="text" name="firstname" placeholder="Enter a firstname"></label>
+    <input type="text" name="lastname" placeholder="Enter a lastname"></p>
     <input type="hidden" name="groupId" value="${group.getId()}">
     <button type="submit">Add</button>
 </form>
