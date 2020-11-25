@@ -24,7 +24,7 @@
     <input type="text" name="firstname" placeholder="Enter a firstname"></label>
     <input type="text" name="lastname" placeholder="Enter a lastname"></p>
     <input type="hidden" name="groupId" value="${group.getId()}">
-    <button type="submit">Add</button>
+    <input type="submit" name="submit" value="Add">
 </form>
 
 <p>Students:</p>
@@ -42,6 +42,13 @@
                 <td>${student.getId()}</td>
                 <td>${student.getFirstName()}</td>
                 <td>${student.getLastName()}</td>
+                <td>
+                    <form method="post" action="${pageContext.request.contextPath}/group">
+                        <input type="hidden" name="studentId" value="${student.getId()}">
+                        <input type="hidden" name="groupId" value="${group.getId()}">
+                        <input type="submit" name="submit" value="Delete">
+                    </form>
+                </td>
                 <td><a href="#">Edit</a></td>
             </tr>
         </c:forEach>

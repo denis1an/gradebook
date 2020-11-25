@@ -40,16 +40,21 @@ public class GroupServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Student student = new Student();
-        student.setFirstName(req.getParameter("firstname"));
-        student.setLastName(req.getParameter("lastname"));
-        Group group = new Group();
-        group.setId(Integer.valueOf(req.getParameter("groupId")));
+        String parameter = req.getParameter("submit");
+        if(parameter.equals("Add")) {
+            Student student = new Student();
+            student.setFirstName(req.getParameter("firstname"));
+            student.setLastName(req.getParameter("lastname"));
+            Group group = new Group();
+            group.setId(Integer.valueOf(req.getParameter("groupId")));
 
-        student.setGroup(group);
+            student.setGroup(group);
 
-        studentDao.save(student);
-
+            studentDao.save(student);
+        }
+        if(parameter.equals("Delete")){
+            studentDao.delete(Integer.valueOf(req.getParameter("studentId")));
+        }
         resp.sendRedirect(req.getRequestURI() + "?id=" + req.getParameter("groupId"));
     }
 }
