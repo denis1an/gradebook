@@ -37,6 +37,10 @@ public class HomeServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Group group = new Group();
+        group.setName(req.getParameter("name"));
+        groupDao.save(group);
 
+        resp.sendRedirect(req.getRequestURI());
     }
 }
