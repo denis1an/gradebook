@@ -16,9 +16,13 @@
 <p>Id: ${group.getId()}</p>
 <p>Name: ${group.getName()}</p>
 
-<button>
-    <a href="#">Add new student</a>
-</button>
+<p>Add student:</p>
+<form method="post" action="${pageContext.request.contextPath}/group">
+    <label>Firstname:<input type="text" name="firstname"></label>
+    <p><label>Lastname:<input type="text" name="lastname"></label></p>
+    <input type="hidden" name="groupId" value="${group.getId()}">
+    <button type="submit">Add</button>
+</form>
 
 <p>Students:</p>
 <table>
