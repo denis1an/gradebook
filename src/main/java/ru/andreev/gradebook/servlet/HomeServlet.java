@@ -27,10 +27,7 @@ public class HomeServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Group> groups = groupDao.findAll();
-        List<Student> students = studentDao.findAll();
-
         req.setAttribute("groups",groups);
-        req.setAttribute("students",students);
 
         req.getRequestDispatcher("groups.jsp").forward(req,resp);
     }
