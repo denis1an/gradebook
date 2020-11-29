@@ -34,14 +34,20 @@
         <th>Id</th>
         <th>Lastname</th>
         <th>Firstname</th>
+        <c:forEach items="${students.get(0).getTasks()}" var="task" >
+            <td>${task.getName()}</td>
+        </c:forEach>
     </tr>
     </thead>
     <tbody>
-        <c:forEach items="${group.getStudents()}" var="student" >
+        <c:forEach items="${students}" var="student" >
             <tr>
                 <td>${student.getId()}</td>
                 <td>${student.getFirstName()}</td>
                 <td>${student.getLastName()}</td>
+                <c:forEach items="${student.getTasks()}" var="task" >
+                    <td>${task.getMark()}</td>
+                </c:forEach>
                 <td>
                     <form method="post" action="${pageContext.request.contextPath}/group">
                         <input type="hidden" name="studentId" value="${student.getId()}">
