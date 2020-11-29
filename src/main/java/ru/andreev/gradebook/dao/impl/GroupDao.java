@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class GroupDao implements IDao<Group> {
 
-    private Connection connection;
+    private final Connection connection;
 
     public GroupDao() {
         connection = Database.getConnection();

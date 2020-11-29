@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class StudentDao implements IDao<Student> {
 
-    private Connection connection;
+    private final Connection connection;
 
     public StudentDao() {
         connection = Database.getConnection();
