@@ -135,6 +135,7 @@ public class StudentDao implements IDao<Student> {
                         task.setId(resultSet.getInt(5));
                         task.setName(resultSet.getString(6));
                         task.setMark(resultSet.getString(7));
+                        tasks.add(task);
                     }while ((hadNext = resultSet.next()) &&
                             student.getId() == resultSet.getInt(1));
                     student.setTasks(tasks);
