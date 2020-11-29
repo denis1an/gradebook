@@ -4,6 +4,7 @@ import ru.andreev.gradebook.dao.IDao;
 import ru.andreev.gradebook.db.Database;
 import ru.andreev.gradebook.entity.Group;
 import ru.andreev.gradebook.entity.Student;
+import ru.andreev.gradebook.entity.Task;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -108,4 +109,44 @@ public class StudentDao implements IDao<Student> {
             e.printStackTrace();
         }
     }
+
+    public List<Student> findAllByGroupId(Integer groupId){
+        String SQL = "SELECT students.id, firstname, lastname, \"groupId\", t.id, name, mark FROM students " +
+                "LEFT JOIN tasks t ON students.id = t.\"studentId\" WHERE \"groupId\" = ? ORDER BY students.id";
+        List<Student> students = null;
+        try (PreparedStatement statement = connection.prepareStatement(SQL)){
+            statement.setInt(1,groupId);
+            try (ResultSet resultSet = statement.executeQuery()){
+                students = new ArrayList<>();
+                boolean hadNext = resultSet.next();
+                while (hadNext){
+                    Student student = new Student();
+                    student.setId(resultSet.getInt(1));
+                    student.setFirstName(resultSet.getString(2));
+                    student.setLastName(resultSet.getString(3));
+
+                    Group group = new Group();
+                    group.setId(resultSet.getInt(4));
+                    student.setGroup(group);
+
+                    List<Task> tasks = new ArrayList<>();
+                    do{
+                        Task task =  new Task();
+                        task.setId(resultSet.getInt(5));
+                        task.setName(resultSet.getString(6));
+                        task.setMark(resultSet.getString(7));
+                    }while ((hadNext = resultSet.next()) &&
+                            student.getId() == resultSet.getInt(1));
+                    student.setTasks(tasks);
+                    students.add(student);
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return students;
+    }
+
+
 }
