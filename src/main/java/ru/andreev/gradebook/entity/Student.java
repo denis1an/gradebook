@@ -1,11 +1,13 @@
 package ru.andreev.gradebook.entity;
 
+import java.util.List;
+
 public class Student {
     private Integer id;
     private String firstName;
     private String lastName;
-
     private Group group;
+    private List<Task> tasks;
 
     public Student() {
     }
@@ -40,5 +42,13 @@ public class Student {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

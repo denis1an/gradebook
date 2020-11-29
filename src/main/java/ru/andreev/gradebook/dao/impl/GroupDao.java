@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class GroupDao implements IDao<Group> {
 
-    private Connection connection;
+    private final Connection connection;
 
     public GroupDao() {
         connection = Database.getConnection();
@@ -70,6 +70,7 @@ public class GroupDao implements IDao<Group> {
                         student.setFirstName(result.getString(4));
                         student.setLastName(result.getString(5));
                         student.setGroup(group);
+
 
                         students.add(student);
                     }while ( (hadNext = result.next()) &&

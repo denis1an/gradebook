@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @WebServlet("/group")
@@ -29,9 +30,11 @@ public class GroupServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Optional<String> optionalGroupId = Optional.of(req.getParameter("id"));
-            Optional<Group> optionalGroup = groupDao.findById(Integer.valueOf(optionalGroupId.orElse("-1")));
+        Optional<Group> optionalGroup = groupDao.findById(Integer.valueOf(optionalGroupId.orElse("-1")));
             if(optionalGroup.isPresent()){
+                List<Student> students = studentDao.findAllByGroupId(optionalGroup.get().getId());
                 req.setAttribute("group", optionalGroup.get());
+                req.setAttribute("students", students);
                 req.getRequestDispatcher("group.jsp").forward(req,resp);
             }else {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
