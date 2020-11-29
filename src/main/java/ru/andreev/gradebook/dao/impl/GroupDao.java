@@ -71,6 +71,7 @@ public class GroupDao implements IDao<Group> {
                         student.setLastName(result.getString(5));
                         student.setGroup(group);
 
+
                         students.add(student);
                     }while ( (hadNext = result.next()) &&
                             group.getId() == result.getInt(1));
