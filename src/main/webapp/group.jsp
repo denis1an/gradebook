@@ -59,7 +59,7 @@
                 </c:forEach>
                 <td>
                     <form method="post" action="${pageContext.request.contextPath}/group">
-                        <input type="hidden" name="studentId" value="${student.getId()}">
+                        <input type="hidden" name="groupId" value="${group.getId()}">
                         <input type="hidden" name="studentId" value="${student.getId()}">
                         <input type="text" name="taskName" placeholder="Enter name">
                         <p>
