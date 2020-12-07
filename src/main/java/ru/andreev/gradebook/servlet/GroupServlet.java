@@ -2,8 +2,10 @@ package ru.andreev.gradebook.servlet;
 
 import ru.andreev.gradebook.dao.impl.GroupDao;
 import ru.andreev.gradebook.dao.impl.StudentDao;
+import ru.andreev.gradebook.dao.impl.TaskDao;
 import ru.andreev.gradebook.entity.Group;
 import ru.andreev.gradebook.entity.Student;
+import ru.andreev.gradebook.entity.Task;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,12 +21,14 @@ public class GroupServlet extends HttpServlet {
 
     private GroupDao groupDao;
     private StudentDao studentDao;
+    private TaskDao taskDao;
 
     @Override
     public void init() throws ServletException {
         super.init();
         groupDao = new GroupDao();
         studentDao = new StudentDao();
+        taskDao = new TaskDao();
     }
 
     @Override
@@ -44,6 +48,16 @@ public class GroupServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String parameter = req.getParameter("submit");
+        if(parameter.equals("Mark")){
+            Task task = new Task();
+            task.setName(req.getParameter("taskName"));
+            task.setMark(req.getParameter("mark"));
+            Student student = new Student();
+            student.setId(Integer.valueOf(req.getParameter("studentId")));
+            task.setStudent(student);
+
+            taskDao.save(task);
+        }
         if(parameter.equals("Add")) {
             Student student = new Student();
             student.setFirstName(req.getParameter("firstname"));

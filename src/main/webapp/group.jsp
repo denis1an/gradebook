@@ -28,6 +28,9 @@
 </form>
 
 <p>Students:</p>
+
+<button>Create new task</button>
+<c:if test="${!students.isEmpty()}">
 <table>
     <thead>
     <tr>
@@ -37,17 +40,37 @@
         <c:forEach items="${students.get(0).getTasks()}" var="task" >
             <td>${task.getName()}</td>
         </c:forEach>
+        <td>
+            New mark
+        </td>
     </tr>
     </thead>
     <tbody>
+
         <c:forEach items="${students}" var="student" >
             <tr>
                 <td>${student.getId()}</td>
                 <td>${student.getFirstName()}</td>
                 <td>${student.getLastName()}</td>
                 <c:forEach items="${student.getTasks()}" var="task" >
-                    <td>${task.getMark()}</td>
+                    <td>
+                            ${task.getMark()}
+                    </td>
                 </c:forEach>
+                <td>
+                    <form method="post" action="${pageContext.request.contextPath}/group">
+                        <input type="hidden" name="studentId" value="${student.getId()}">
+                        <input type="hidden" name="studentId" value="${student.getId()}">
+                        <input type="text" name="taskName" placeholder="Enter name">
+                        <p>
+                            <input type="text" name="mark" placeholder="Enter mark">
+                        </p>
+                        <p>
+                            <input type="submit" name="submit" value="Mark">
+                        </p>
+                    </form>
+
+                </td>
                 <td>
                     <form method="post" action="${pageContext.request.contextPath}/group">
                         <input type="hidden" name="studentId" value="${student.getId()}">
@@ -60,6 +83,6 @@
         </c:forEach>
     </tbody>
 </table>
-
+</c:if>
 </body>
 </html>

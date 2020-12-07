@@ -5,6 +5,8 @@ public class Task {
     private String name;
     private String mark;
 
+    private Student student;
+
     public Task() {
     }
 
@@ -30,5 +32,13 @@ public class Task {
 
     public void setMark(String mark) {
         this.mark = mark;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }
